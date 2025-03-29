@@ -11,8 +11,6 @@
 ### 1. Configuración inicial (`configuracion.sh`)
 Configura el entorno y genera los archivos necesarios:
 
-  - Clona circomlib
-
   - Compila el circuito corto.circom
 
   - Descarga el archivo ptau (trusted setup)
