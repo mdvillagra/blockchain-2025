@@ -54,7 +54,7 @@ signal output r;
    ```
 
 5. **Verificación de consistencia**  
-   Se impone la restricción `suma === q * p + r` para asegurar la validez del resultado.
+   Se impone la restricción `suma === q * p + r` para asegurar la validez de la salida.
 
    ```cricom
    suma === q * p + r;
@@ -125,49 +125,84 @@ Si la verificación es correcta, la salida indicará **"Proof is valid"**.
 
 ### Entrada 1: `a = 3, b = 2`
 
-```cricom
-a2 = 3 * 3 = 9
-b2 = 2 * 2 = 4
-suma = 9 + 4 = 13
-r = 13 % 13 = 0
-q = (13 - 0) / 13 = 1
-suma === q * p + r → 13 === 1 * 13 + 0 → ✅
+```circom
+a2 <== a * a → 3 * 3 = 9
+b2 <== b * b → 2 * 2 = 4
+suma <== a2 + b2 → 9 + 4 = 13
+r <-- suma % p → 13 % 13 = 0
+q <-- (suma - r) / p → (13 - 0) / 13 = 1
+suma === q * p + r → 13 === 1 * 13 + 0 → 13 === 13
 r = 0 (resultado final)
 ```
 
 ### Entrada 2: `a = 4, b = 1`
 
-```cricom
-a2 = 4 * 4 = 16
-b2 = 1 * 1 = 1
-suma = 16 + 1 = 17
-r = 17 % 13 = 4
-q = (17 - 4) / 13 = 1
-suma === q * p + r → 17 === 1 * 13 + 4 → ✅
+```circom
+a2 <== a * a → 4 * 4 = 16
+b2 <== b * b → 1 * 1 = 1
+suma <== a2 + b2 → 16 + 1 = 17
+r <-- suma % p → 17 % 13 = 4
+q <-- (suma - r) / p → (17 - 4) / 13 = 1
+suma === q * p + r → 17 === 1 * 13 + 4 → 17 === 17
 r = 4 (resultado final)
 ```
 
 ### Entrada 3: `a = 30, b = 60`
 
-```cricom
-a2 = 30 * 30 = 900
-b2 = 60 * 60 = 3600
-suma = 900 + 3600 = 4500
-r = 4500 % 13 = 2
-q = (4500 - 2) / 13 = 346
-suma === q * p + r → 4500 === 346 * 13 + 2 → ✅
+```circom
+a2 <== a * a → 30 * 30 = 900
+b2 <== b * b → 60 * 60 = 3600
+suma <== a2 + b2 → 900 + 3600 = 4500
+r <-- suma % p → 4500 % 13 = 2
+q <-- (suma - r) / p → (4500 - 2) / 13 = 346
+suma === q * p + r → 4500 === 346 * 13 + 2 → 4500 === 4498 + 2 → 4500 === 4500
 r = 2 (resultado final)
 ```
 
 ### Entrada 4: `a = -3, b = 2`
 
-```cricom
-a2 = (-3) * (-3) = 9
-b2 = 2 * 2 = 4
-suma = 9 + 4 = 13
-r = 13 % 13 = 0
-q = (13 - 0) / 13 = 1
-suma === q * p + r → 13 === 1 * 13 + 0 → ✅
+```circom
+a2 <== a * a → (-3) * (-3) = 9
+b2 <== b * b → 2 * 2 = 4
+suma <== a2 + b2 → 9 + 4 = 13
+r <-- suma % p → 13 % 13 = 0
+q <-- (suma - r) / p → (13 - 0) / 13 = 1
+suma === q * p + r → 13 === 1 * 13 + 0 → 13 === 13
 r = 0 (resultado final)
 ```
 
+### Entrada 5: `a = -3, b = -2`
+
+```circom
+a2 <== a * a → (-3) * (-3) = 9
+b2 <== b * b → (-2) * (-2) = 4
+suma <== a2 + b2 → 9 + 4 = 13
+r <-- suma % p → 13 % 13 = 0
+q <-- (suma - r) / p → (13 - 0) / 13 = 1
+suma === q * p + r → 13 === 1 * 13 + 0 → 13 === 13
+r = 0 (resultado final)
+```
+
+### Entrada 6: `a = 0, b = 4`
+
+```circom
+a2 <== a * a → 0 * 0 = 0
+b2 <== b * b → 4 * 4 = 16
+suma <== a2 + b2 → 0 + 16 = 16
+r <-- suma % p → 16 % 13 = 3
+q <-- (suma - r) / p → (16 - 3) / 13 = 1
+suma === q * p + r → 16 === 1 * 13 + 3 → 16 === 16
+r = 3 (resultado final)
+```
+
+### Entrada 7: `a = 0, b = 0`
+
+```circom
+a2 <== a * a → 0 * 0 = 0
+b2 <== b * b → 0 * 0 = 0
+suma <== a2 + b2 → 0 + 0 = 0
+r <-- suma % p → 0 % 13 = 0
+q <-- (suma - r) / p → (0 - 0) / 13 = 0
+suma === q * p + r → 0 === 0 * 13 + 0 → 0 === 0
+r = 0 (resultado final)
+```
