@@ -1,1 +1,0 @@
-Crea un directorio con los nombres de los integrantes del grupo y dentra de ese directorio levanta los entregables.
