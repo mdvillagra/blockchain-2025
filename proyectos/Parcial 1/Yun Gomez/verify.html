@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verificador de Pruebas ZK</title>
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/build/snarkjs.min.js"></script>
+</head>
+<body>
+  <h1>Verificador de Pruebas ZK</h1>
+  <p>subir proof.json: 
+    <input type="file" id="proofFile" accept=".json" placeholder="Sube proof.json">
+  </p>
+  <p>subir public.json:
+    <input type="file" id="publicFile" accept=".json" placeholder="Sube public.json">
+  </p>
+  <p>subir verification_key.json:
+    <input type="file" id="vkeyFile" accept=".json" placeholder="Sube verification_key.json">
+  </p>
+  
+  <button onclick="verify()">Verificar Prueba</button>
+  <div id="result"></div>
+
+  <script>
+    async function verify() {
+      try {
+        // Leer los archivos
+        const proof = JSON.parse(await readFile(document.getElementById('proofFile')));
+        const publicSignals = JSON.parse(await readFile(document.getElementById('publicFile')));
+        const vKey = JSON.parse(await readFile(document.getElementById('vkeyFile')));
+        
+        // Verificar la prueba
+        const res = await snarkjs.groth16.verify(vKey, publicSignals, proof);
+        
+        const resultDiv = document.getElementById('result');
+        if (res === true) {
+          resultDiv.innerHTML = `
+            <p style="color: green;">¡Prueba verificada correctamente!</p>
+            <p>Valor de c (salida pública): ${publicSignals[0]}</p>
+          `;
+        } else {
+          resultDiv.innerHTML = `<p style="color: red;">La prueba no es válida</p>`;
+        }
+      } catch (error) {
+        alert("Error en la verificación: " + error.message);
+      }
+    }
+
+    function readFile(input) {
+      return new Promise((resolve, reject) => {
+        const file = input.files[0];
+        if (!file) {
+          reject(new Error("No se seleccionó ningún archivo"));
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = error => reject(error);
+        reader.readAsText(file);
+      });
+    }
+  </script>
+</body>
+</html>
