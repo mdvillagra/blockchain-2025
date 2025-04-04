@@ -89,5 +89,4 @@
  *     - `sum_mod_p = 74 % 23 = 5`.
  *   - Salida: `c = 5`.
  *
- * Este circuito es útil en aplicaciones de blockchain y criptografía donde se requiere realizar cálculos de manera privada y verificable.
- */
+

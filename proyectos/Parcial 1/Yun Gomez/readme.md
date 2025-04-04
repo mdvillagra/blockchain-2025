@@ -1,7 +1,6 @@
 # Proyecto: Verificación de Pruebas de Conocimiento Cero (ZKP)
 
-Este repositorio contiene un proyecto completo para la generación y verificación de pruebas de conocimiento cero (ZKP) utilizando el circuito `SquareSumMod`. El objetivo es permitir que el profesor pueda probar el proyecto en su propia máquina siguiendo las instrucciones proporcionadas.
-
+Este repositorio contiene un proyecto completo para la generación y verificación de pruebas de conocimiento cero (ZKP) utilizando el circuito `SquareSumMod`.
 ## Estructura del Repositorio
 
 El repositorio incluye los siguientes archivos:
