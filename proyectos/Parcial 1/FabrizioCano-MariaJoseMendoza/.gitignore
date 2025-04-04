@@ -1,0 +1,39 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Build artifacts
+*.r1cs
+*.sym
+*.wtns
+
+#files
+proof_input1.json
+proof_input2.json
+public_input1.json
+public_input2.json 
+
+# Logs and temp files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Public and generated files
+/public/
+/output/
+dist/
+out/
+coverage/
+
+# Compiled JavaScript files
+*.js.map
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor and environment settings
+.vscode/
+.idea/
+.env
