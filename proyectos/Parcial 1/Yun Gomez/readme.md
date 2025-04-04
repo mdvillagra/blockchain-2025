@@ -52,7 +52,7 @@ Antes de comenzar, asegúrate de tener instaladas las siguientes herramientas y 
 
 Para eliminar todos los archivos generados durante el proceso de pruebas, ejecuta el script `clean.sh`:
 
-```markdown
+
 ### 3. Verificación de Pruebas
 
 #### Verificación en el Navegador
@@ -74,4 +74,3 @@ Para eliminar todos los archivos generados durante el proceso de pruebas, ejecut
     node verify.js
     ```
 4. Observa el resultado de la verificación en la consola. Si la prueba es válida, se mostrará un mensaje indicando que la prueba es válida junto con el valor de la salida pública.
-```
