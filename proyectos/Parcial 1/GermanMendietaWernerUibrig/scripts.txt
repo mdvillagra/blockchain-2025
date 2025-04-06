@@ -1,0 +1,10 @@
+circom mod_sum_square.circom --r1cs --wasm --sym
+node mod_sum_square_js/generate_witness.js mod_sum_square_js/mod_sum_square.wasm input.json witness.wtns
+snarkjs wtns export json witness.wtns witness.json
+more witness.json
+snarkjs powersoftau new bn128 12 pot12_0000.ptau -v
+snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name="First contribution" -v
+snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v
+snarkjs groth16 setup mod_sum_square.r1cs pot12_final.ptau mod_sum_square_0000.zkey
+snarkjs zkey contribute mod_sum_square_0000.zkey mod_sum_square_final.zkey --name="Contributor" -v
+snarkjs zkey export verificationkey mod_sum_square_final.zkey verification_key.json

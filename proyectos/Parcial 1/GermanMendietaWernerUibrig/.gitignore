@@ -1,0 +1,33 @@
+# Ignorar directorios y archivos generados por Circom
+*.r1cs
+*.sym
+*/circuit_js/
+*/circuit.wasm
+*.wtns
+
+# Ignorar archivos generados por snarkjs (Powers of Tau, pruebas y claves)
+*.ptau
+*.zkey
+proof.json
+public.json
+verification_key.json
+
+# Ignorar entradas de prueba generadas dinámicamente
+input_*.json
+
+# Ignorar scripts de prueba o de salida temporal
+witness_*.wtns
+proof_*.json
+public_*.json
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de Node.js
+node_modules/
+package-lock.json
+
+# Ignorar logs y otros temporales
+*.log
+*.tmp
