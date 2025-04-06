@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verificador ZK</title>
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/build/snarkjs.min.js"></script>
+</head>
+<body>
+  <h1>Verificación de Prueba ZK</h1>
+  
+  <p>verification_key.json: </p><input type="file" id="vkFile" accept=".json" /> <br> <br>
+  <p>proof.json: </p><input type="file" id="proofFile" accept=".json" /> <br> <br>
+  <p>public.json: </p><input type="file" id="publicFile" accept=".json" /> <br> <br>
+  <button onclick="verificar()">Verificar</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function verificar() {
+      const vk = await leerArchivo("vkFile");
+      const proof = await leerArchivo("proofFile");
+      const publicSignals = await leerArchivo("publicFile");
+
+      console.log("vk", vk);
+      console.log("proof", proof);
+      console.log("public", publicSignals);
+
+      const res = await snarkjs.groth16.verify(vk, publicSignals, proof);
+
+      console.log("res", res);
+      
+      document.getElementById("output").innerText = res
+        ? "Prueba válida"
+        : "Prueba inválida";
+    }
+
+    async function leerArchivo(inputId) {
+      const file = document.getElementById(inputId).files[0];
+      const text = await file.text();
+      return JSON.parse(text);
+    }
+  </script>
+</body>
+</html>
