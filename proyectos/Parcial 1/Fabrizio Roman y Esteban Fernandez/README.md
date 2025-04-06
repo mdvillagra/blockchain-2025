@@ -5,23 +5,17 @@
 - Esteban Fernandez
 
 ### Requisitos:
-**Node.js**
+- **Node.js** [Pagina Oficial](https://nodejs.org/en/download)
 
-- Instala Node siguiendo las instrucciones de la pagina oficial (https://nodejs.org/en/download)
+- **Circom 2** [Repositorio Oficial](https://github.com/iden3/circom)
 
-**Circom 2**
+- **Snarkjs** [Repositorio Oficial](https://github.com/iden3/snarkjs)
 
-- Instala Circom 2 siguiendo las instrucciones en el repositorio oficial (https://github.com/iden3/circom).
+- **Servidor local (opcional, para la verificación en navegador)**
 
-**Snarkjs**
+  - Puedes usar el paquete `serve` de npm a través de npx para levantar un servidor local. Por ejemplo: `npx serve`.
 
-- Instala snarkjs en el proyecto siguiendo las instrucciones en el repositorio oficial (https://github.com/iden3/snarkjs)
-
-**Servidor local (opcional, para la verificación en navegador)**
-
-- Puedes usar el paquete `serve` de npm a través de npx para levantar un servidor local. Por ejemplo: `npx serve`.
-
-- También puedes usar la extension Live Server en Visual Studio Code
+  - También puedes usar la extension Live Server en Visual Studio Code
 
 **Instalar dependencias:**  
    ```bash
@@ -36,32 +30,34 @@
 
 **Ejecutar el script de construcción y verificación (build.sh)**
 
-- Antes de ejecutar, asegúrate de que build.sh tenga permisos de ejecución. Si no los tiene, otórgalos con: `chmod +x build.sh`
-
-- Luego, ejecuta: `./build.sh`
-
-  El script realizará los siguientes pasos:
-
-  - Compilará `circuito.circom`, generando los archivos `.r1cs`, `.wasm` y `.sym`.
-  - Generará el testigo (`witness.wtns`) usando `input.json`.
-  - Configurará la ceremonia de confianza (Powers of Tau) y preparará los parámetros.
-  - Ejecutará el setup de Groth16 (generación de zkeys) y exportará `verification_key.json`.
-  - Generará la prueba (`proof.json` y `public.json`).
-  - Verificará la prueba generada.
-  - En la carpeta `web` copiará los archivos `verification_key.json`, `proof.json` y `public.json`.
+- Antes de ejecutar, asegúrate de que build.sh tenga permisos de ejecución. Si no los tiene, otórgalos con: 
+  ```bash
+  chmod +x build.sh
+  ```
+- Luego, ejecuta: 
+  ```bash
+  ./build.sh
+  ```
 
 
 **Verificar la prueba en Node.js**
 
-- En la raíz del proyecto, ejecuta: node verify.js
-
-- El script leerá verification_key.json, proof.json y public.json, y mostrará en la consola si la prueba es válida o no.
+- En la raíz del proyecto, ejecuta:
+  ```bash
+  node verify.js
+  ```
 
 **Verificar la prueba en el navegador**
 
-- Navega a la carpeta web: cd web
+- Navega a la carpeta web: 
+    ```bash
+    cd web
+    ```
 
-- Levanta un servidor local (por ejemplo, usando serve): npx serve .
+- Levanta un servidor local (por ejemplo, usando serve): 
+    ```bash
+    npx serve .
+    ```
 
 - Abre la URL que se muestre (por ejemplo, http://localhost:3000) en tu navegador.
 
