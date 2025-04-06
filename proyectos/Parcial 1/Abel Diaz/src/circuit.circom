@@ -1,7 +1,7 @@
 pragma circom 2.0.0;
 
 // Importar el componente LessThan de la librería estándar de Circom
-include "circomlib/circuits/comparators.circom";
+include "node_modules/circomlib/circuits/comparators.circom";
 
 template Mod() {
     signal input a;
