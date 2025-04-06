@@ -35,6 +35,7 @@ Navegar a la carpeta verificador
 Para verificar con node:
 
 ```
+npm install
 node verify.js
 ```
 
