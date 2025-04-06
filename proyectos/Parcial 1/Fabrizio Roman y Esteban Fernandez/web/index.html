@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/build/snarkjs.min.js"></script>
+</head>
+<body>
+  <h1>Verificador en el navegador</h1>
+  <button onclick="verificar()">Verificar prueba</button>
+  <p id="resultado"></p>
+
+  <script>
+    async function verificar() {
+      // Leemos la clave de verificación, la prueba y las señales públicas
+      const vKey = await fetch("verification_key.json").then(r => r.json());
+      const proof = await fetch("proof.json").then(r => r.json());
+      const publicSignals = await fetch("public.json").then(r => r.json());
+
+      // Verificamos la prueba utilizando snarkjs
+      const res = await snarkjs.groth16.verify(vKey, publicSignals, proof);
+      document.getElementById("resultado").textContent = res ? "Prueba válida" : "Prueba inválida";
+    }
+  </script>
+</body>
+</html>
