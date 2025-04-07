@@ -1,6 +1,7 @@
 # Documentación del proyecto
 ## Estructura del circuito
 ![Estructura del circuito en **circuito.circom**](https://drive.google.com/uc?id=1iard0-wYmXR3-zf2kmJ4p32cwDL5YOTa)
+
 Se tienen dos entradas *a* y *b*, cada una de ellas se eleva al cuadrado multiplicándose a si mismas, el resultado se suma y la misma pasa por módulo 17 para enviar el resultado a la salida *c*.
 ### Generación y verificación de pruebas
 Luego de compilar el circuito y generar los testigos desde **entradas.json** se procede a seguir los pasos de la generación y verificación de pruebas descritas en la [documentación de circom](https://docs.circom.io/getting-started/proving-circuits/):
