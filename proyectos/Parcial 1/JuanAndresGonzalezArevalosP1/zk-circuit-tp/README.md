@@ -1,6 +1,7 @@
 # Trabajo Práctico 1 - Blockchain
 
-## Autor: Juan Andrés González Arevalos  
+## Autores:  -Juan Andrés González Arevalos => ci -> 5207720  
+             -Pablo Caballero   => ci -> 5170878
 Carrera: Ingeniería Informática  
 Materia: Blockchain  
 Año: 2025
