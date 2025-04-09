@@ -53,11 +53,44 @@ circom circuit.circom --r1cs --wasm --sym
 # Generar testigo
 node circuit_js/generate_witness.js circuit_js/circuit.wasm input.json witness.wtns 
 
-# Generar prueba zk-SNARK
-snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json
+Crear el archivo inicial:
+
+    snarkjs powersoftau new bn128 12 pot12_0000.ptau -v
+
+Contribuir al proceso:
+
+    snarkjs powersoftau contribute pot12_0000.ptau pot12_final.ptau --name="contribución" -v
+
+Preparar
+
+    snarkjs powersoftau prepare phase2 pot12_final.ptau pot12_prep.ptau -v
+
+Configurar el Sistema de Pruebas (Groth16)
+
+Ejecutar estos comandos:
+
+    snarkjs groth16 setup circuit.r1cs pot12_prep.ptau circuit_0000.zkey
+
+    snarkjs zkey contribute circuit_0000.zkey circuit_final.zkey --name="final" -v
+
+    snarkjs zkey export verificationkey circuit_final.zkey verification_key.json
+
+Generación y Verificación de la Prueba
+
+Para crear la prueba y generar las señales públicas:
+
+    snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json
+
+Para verificar:
+
+    snarkjs groth16 verify verification_key.json public.json proof.json
+Para verificar con node:
+
+	node verificar.js
+
 ```
 
-### 3️⃣ Verificación en Navegador (Nuevo Proceso)
+### 3️⃣ Verificación en Navegador 
 
 ```bash
 cd web_verifier
