@@ -47,7 +47,7 @@ Este proyecto implementa un circuito en Circom.
 
   
 
-## Instrucciones
+## Instrucciones (Windows)
 
   
 
