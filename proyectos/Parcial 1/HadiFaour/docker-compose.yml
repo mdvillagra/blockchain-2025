@@ -1,0 +1,16 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  contenedor-principal:
+    build: .
+    container_name: contenedor-principal
+    volumes:
+      - ./Circuito:/app/Circuito
+      - ./ScriptsZK:/app/ScriptsZK
+      - ./Pruebas:/app/Pruebas
+    working_dir: /app
+    tty: true
+    # Si necesitas exponer puertos para desarrollo:
+    # ports:
+    #   - "3000:3000"
