@@ -2,6 +2,14 @@
 
 Este proyecto implementa un mercado descentralizado de NFTs utilizando Solidity, Hardhat, React y Ethers.js.
 
+# CONTRATO
+
+Contrato Desplegado
+
+Red: Ephemery Testnet
+Dirección del Contrato: 0xbF2A94cba414cadA815224466A661fd956Ed0A43
+Explorer: https://explorer.ephemery.dev/address/0xbF2A94cba414cadA815224466A661fd956Ed0A43
+
 # Intrucciones
 
 - Tener una cuenta en MetaMask
@@ -10,12 +18,9 @@ Este proyecto implementa un mercado descentralizado de NFTs utilizando Solidity,
 
 - Instalar las dependecias con npm install
 
-- Cpmilar y desplegar contrato con
-  npx hardhat run scripts/deploy.js --network ephemery, del cual se obtendra la direccion del contrato que debe ir en el .env
-
 - Crear un .env en la raiz del pryecto y en web_app, el cual debe poseer lo siguiente
   PRIVATE_KEY=clave_privada
-  VITE_CONTRACT_ADDRESS=direccion_contrato
+  VITE_CONTRACT_ADDRESS=0xbF2A94cba414cadA815224466A661fd956Ed0A43
   VITE_RPC_URL=https://otter.bordel.wtf/erigon
 
 - Para el front:
