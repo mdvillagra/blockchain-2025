@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación ZK en el Navegador</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        button { padding: 10px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        #resultado { margin-top: 15px; font-size: 18px; }
+        #fileInputs { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Verificación de Prueba de Conocimiento Cero</h1>
+    
+    <div id="fileInputs">
+        <h3>Cargar archivos necesarios:</h3>
+        <div>
+            <label>verification_key.json: <input type="file" id="vkeyFile"></label>
+        </div>
+        <div>
+            <label>proof.json: <input type="file" id="proofFile"></label>
+        </div>
+        <div>
+            <label>public.json: <input type="file" id="publicFile"></label>
+        </div>
+    </div>
+
+    <button onclick="verificar()">Verificar Prueba</button>
+    <p id="resultado"></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/build/snarkjs.min.js"></script>
+    <script>
+        // Objetos para almacenar los datos cargados
+        let verificationKey = null;
+        let proof = null;
+        let publicSignals = null;
+
+        // Cargadores de archivos
+        document.getElementById('vkeyFile').addEventListener('change', async (e) => {
+            verificationKey = await readJSONFile(e.target.files[0]);
+        });
+
+        document.getElementById('proofFile').addEventListener('change', async (e) => {
+            proof = await readJSONFile(e.target.files[0]);
+        });
+
+        document.getElementById('publicFile').addEventListener('change', async (e) => {
+            publicSignals = await readJSONFile(e.target.files[0]);
+        });
+
+        // Función para leer archivos JSON
+        async function readJSONFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = event => resolve(JSON.parse(event.target.result));
+                reader.onerror = error => reject(error);
+                reader.readAsText(file);
+            });
+        }
+
+        // Función de verificación
+        async function verificar() {
+            const resultado = document.getElementById("resultado");
+            
+            try {
+                // Verificar que todos los archivos estén cargados
+                if (!verificationKey || !proof || !publicSignals) {
+                    throw new Error("Por favor, carga todos los archivos requeridos");
+                }
+
+                resultado.innerText = "Verificando...";
+                resultado.style.color = "black";
+
+                const res = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
+                console.log(res);
+                resultado.innerText = res ? "✅ Prueba válida" : "❌ Prueba inválida";
+                resultado.style.color = res ? "green" : "red";
+            } catch (error) {
+                console.error("Error:", error);
+                resultado.innerText = "⚠️ Error: " + error.message;
+                resultado.style.color = "orange";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificador zk-SNARK</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* Título */
+    h1 {
+      font-size: 2rem;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Resultado */
+    #result {
+      font-size: 1.2rem;
+      color: #27ae60;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #e8f5e9;
+      border-radius: 5px;
+      border: 1px solid #a5d6a7;
+    }
+
+    /* Botón (opcional) */
+    button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    /* Pie de página */
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Verificador zk-SNARK en el navegador</h1>
+    <p id="result">Esperando verificación...</p>
+    <!-- Botón para iniciar la verificación -->
+    <button onclick="runVerification()">Iniciar Verificación</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/build/snarkjs.min.js"></script>
+  <script>
+    // Función para iniciar la verificación
+    async function runVerification() {
+      const resultElement = document.getElementById("result");
+      resultElement.textContent = "Verificando...";
+      resultElement.style.color = "#e67e22";
+      resultElement.style.backgroundColor = "#fde3a7";
+      resultElement.style.borderColor = "#f1c40f";
+
+      try {
+        // Cargar la clave de verificación, las señales públicas y la prueba
+        const verificationKey = await fetch("./verification_key.json").then(res => res.json());
+        const publicSignals = await fetch("./public.json").then(res => res.json());
+        const proof = await fetch("./prueba.json").then(res => res.json());
+
+        // Verificar la prueba
+        const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
+
+        // Mostrar el resultado en la página
+        if (isValid) {
+          resultElement.textContent = "✅ La prueba es válida.";
+          resultElement.style.color = "#27ae60";
+          resultElement.style.backgroundColor = "#e8f5e9";
+          resultElement.style.borderColor = "#a5d6a7";
+        } else {
+          resultElement.textContent = "❌ La prueba no es válida.";
+          resultElement.style.color = "#c0392b";
+          resultElement.style.backgroundColor = "#f9ebea";
+          resultElement.style.borderColor = "#e74c3c";
+        }
+      } catch (error) {
+        resultElement.textContent = "⚠️ Error al verificar la prueba.";
+        resultElement.style.color = "#c0392b";
+        resultElement.style.backgroundColor = "#f9ebea";
+        resultElement.style.borderColor = "#e74c3c";
+        console.error("Error al verificar la prueba:", error);
+      }
+    }
+  </script>
+</body>
+</html>

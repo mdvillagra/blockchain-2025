@@ -1,0 +1,46 @@
+<script src="https://cdn.jsdelivr.net/npm/snarkjs@0.6.11/build/snarkjs.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificador Zero Knowledge Proof</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    pre {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Verificador Zero Knowledge Proof</h1>
+  <button onclick="verificar()">Verificar Prueba</button>
+
+  <pre id="resultado"></pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@0.6.11/build/snarkjs.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
