@@ -1,15 +1,16 @@
+require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 
 /** @type import('hardhat/config').HardhatUserConfig */
-module.exports = {
-  solidity: "0.8.28",
-};
-
-networks: 
+module.exports = 
 {
-  ephemery: 
-  {
-    url: "https://rpc.ephemery.dev",
-    accounts: [process.env.PRIVATE_KEY]
-  }
-}
+    networks: 
+    {
+        ephemery: 
+        {
+            url: process.env.VITE_RPC_URL,
+            accounts: [process.env.PRIVATE_KEY],
+        }
+    },
+    solidity: "0.8.28",
+};
