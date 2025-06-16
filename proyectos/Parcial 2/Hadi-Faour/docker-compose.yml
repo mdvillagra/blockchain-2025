@@ -1,0 +1,12 @@
+services:
+  nft-marketplace:
+    build: .
+    ports:
+      - "3000:3000"
+      - "8545:8545"
+    environment:
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - VITE_RPC_URL=${VITE_RPC_URL}
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./cache:/app/cache

@@ -9,8 +9,10 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract Marketplace is ERC721, ERC721URIStorage {
+// Agregue la protección contra reentrancy
+contract Marketplace is ERC721, ERC721URIStorage, ReentrancyGuard {
     // Token ID Management System
     // --------------------------
     // Contador de incremento automático para ID de tokens NFT
@@ -35,6 +37,10 @@ contract Marketplace is ERC721, ERC721URIStorage {
     // Almacén de datos principal que conecta los ID de token con los listados
     // Permite la búsqueda O(1) para las operaciones del mercado
     mapping(uint256 => Listing) public listings;
+
+
+    mapping(address => uint256) private pendingWithdrawals; // Nueva variable de estado, seguimiento de fondos pendientes
+
 
     // Marketplace Event System
     // ------------------------
@@ -104,15 +110,18 @@ contract Marketplace is ERC721, ERC721URIStorage {
     // 4. Reenvía el pago al vendedor mediante transferencia ETH nativa
     // 5. Emite un evento de venta para el seguimiento de la transacción
     // 6. Incluye comprobaciones de seguridad para el éxito de la transferencia
-    function buy(uint256 tokenId) external payable {
+
+    function buy(uint256 tokenId) external payable nonReentrant {
         Listing storage listing = listings[tokenId];
         require(!listing.isSold, "Already sold");
-        require(msg.value >= listing.price, "Insufficient funds");
+        require(msg.value == listing.price, "Incorrect payment amount");
 
         listing.isSold = true;
         _transfer(listing.owner, msg.sender, tokenId);
-        (bool success, ) = listing.owner.call{value: msg.value}("");
-        require(success, "Transfer failed");
+
+        pendingWithdrawals[listing.owner] += msg.value; // En vez de la transferencia directa, agregue a retiros pendientes
+
+
         emit ItemSold(tokenId, msg.sender, listing.price);
     }
 
@@ -128,8 +137,14 @@ contract Marketplace is ERC721, ERC721URIStorage {
 
     // Funds Management System
     // -----------------------
-    // Permite al titular del contrato retirar las comisiones acumuladas
-    function withdraw() external {
-        payable(msg.sender).transfer(address(this).balance);
+    // Actualizar la función de retiro
+    function withdraw() external nonReentrant {
+        uint256 amount = pendingWithdrawals[msg.sender];
+        require(amount > 0, "No funds available");
+
+        pendingWithdrawals[msg.sender] = 0;
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Transfer failed");
+
     }
 }

@@ -1,0 +1,14 @@
+# Node modules
+/node_modules
+/web-app/node_modules
+
+# Package lock files
+/package-lock.json
+/web-app/package-lock.json
+
+# Environment files
+.env
+/web-app/.env
+
+# Optional: VSCode config (si usás VSCode)
+/.vscode/
