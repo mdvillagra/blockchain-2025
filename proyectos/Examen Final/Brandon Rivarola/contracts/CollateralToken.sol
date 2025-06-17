@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CollateralToken is ERC20, Ownable
 {
-    constructor(address initialOwner) ERC20("Collateral USD", "cUSB") Ownable(initialOwner) {}
+    constructor() ERC20("Collateral USD", "cUSB") Ownable(msg.sender) {}
 
     function mint(address to, uint256 amount) external onlyOwner
     {

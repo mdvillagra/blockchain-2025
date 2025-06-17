@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract LoanToken is ERC20, Ownable 
 {
-    constructor(address initialOwner) ERC20("Loan DAI", "dDAI") Ownable(initialOwner) {}
+    constructor() ERC20("Loan DAI", "dDAI") Ownable(msg.sender) {}
 
     function mint(address to, uint256 amount) external onlyOwner 
     {
