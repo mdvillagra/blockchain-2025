@@ -1,0 +1,27 @@
+{
+  "name": "blockfinal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "coverage": "hardhat coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.0",
+    "blockfinal": "file:",
+    "dotenv": "^16.5.0",
+    "react": "^19.1.0",
+    "vite": "^6.3.5"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "ethers": "^5.8.0",
+    "hardhat": "^2.24.2",
+    "solidity-coverage": "^0.8.16"
+  }
+}
