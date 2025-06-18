@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -47,11 +47,16 @@ contract LendingProtocol is Ownable
 
     function repay() external 
     {
-        // Acumula el interés antes de permitir el pago
-        if (loanBalances[msg.sender] > 0) {
-            accrueInterest(msg.sender);
-        }
+        // Solo acumula el interés si no se ha hecho explícitamente
+        // y hay una deuda pendiente
         uint256 totalDebt = loanBalances[msg.sender] + accruedInterest[msg.sender];
+        if (loanBalances[msg.sender] > 0 && accruedInterest[msg.sender] == 0) {
+            accrueInterest(msg.sender);
+            totalDebt = loanBalances[msg.sender] + accruedInterest[msg.sender]; // Recalcula después de acumular
+        }
+        
+        if (totalDebt == 0) return; // No hay nada que pagar
+        
         require(IERC20(loanTokenAddress).balanceOf(msg.sender) >= totalDebt, "Saldo insuficiente.");
         IERC20(loanTokenAddress).transferFrom(msg.sender, address(this), totalDebt);
         loanBalances[msg.sender] = 0;
@@ -60,6 +65,7 @@ contract LendingProtocol is Ownable
 
     function withdrawCollateral() external 
     {
+        require(collateralBalances[msg.sender] > 0, "No tienes colateral para retirar.");
         require(loanBalances[msg.sender] == 0, "Aun tienes deuda activa.");
         uint256 amount = collateralBalances[msg.sender];
         collateralBalances[msg.sender] = 0;
