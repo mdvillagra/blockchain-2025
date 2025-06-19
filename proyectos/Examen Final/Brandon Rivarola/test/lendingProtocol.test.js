@@ -19,7 +19,7 @@ describe("Token Contracts", function () {
   describe("CollateralToken", function () {
     it("Should have correct name and symbol", async function () {
       expect(await collateralToken.name()).to.equal("Collateral USD");
-      expect(await collateralToken.symbol()).to.equal("cUSB");
+      expect(await collateralToken.symbol()).to.equal("cUSD");
     });
 
     it("Should allow owner to mint", async function () {
@@ -95,6 +95,34 @@ describe("LendingProtocol", function () {
     await collateralToken.mint(user1.address, collateralAmount);
     await loanToken.mint(await lendingProtocol.getAddress(), ethers.parseEther("1000"));
     await loanToken.mint(user1.address, ethers.parseEther("110"));
+  });
+
+  it("Should allow the owner to add loan token liquidity", async function () {
+    const liquidityAmount = ethers.parseEther("500");
+    await loanToken.mint(owner.address, liquidityAmount);
+    await loanToken.connect(owner).approve(await lendingProtocol.getAddress(), liquidityAmount);
+    
+    const initialContractBalance = await loanToken.balanceOf(await lendingProtocol.getAddress());
+    
+    await lendingProtocol.connect(owner).addLoanTokenLiquidity(liquidityAmount);
+    
+    const finalContractBalance = await loanToken.balanceOf(await lendingProtocol.getAddress());
+    expect(finalContractBalance).to.equal(initialContractBalance + liquidityAmount);
+  });
+
+  it("Should not allow a non-owner to add liquidity", async function () {
+    const liquidityAmount = ethers.parseEther("500");
+    await loanToken.mint(user1.address, liquidityAmount);
+    await loanToken.connect(user1).approve(await lendingProtocol.getAddress(), liquidityAmount);
+
+    await expect(lendingProtocol.connect(user1).addLoanTokenLiquidity(liquidityAmount))
+      .to.be.revertedWithCustomError(lendingProtocol, "OwnableUnauthorizedAccount")
+      .withArgs(user1.address);
+  });
+
+  it("Should fail to add zero liquidity", async function () {
+    await expect(lendingProtocol.connect(owner).addLoanTokenLiquidity(0))
+      .to.be.revertedWith("La cantidad debe ser mayor que cero.");
   });
 
   describe("Deployment", function () {

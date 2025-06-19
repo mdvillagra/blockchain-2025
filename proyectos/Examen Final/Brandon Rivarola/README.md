@@ -12,15 +12,17 @@ PRIVATE_KEY=""//Acá se debe poner la clave privada de la billetera
 VITE_RPC_URL="https://otter.bordel.wtf/erigon"
 ```
 
-**2.** Desplegar el contrato: `npx hardhat run scripts/despliegue.js --network ephemery`
+**2.** Ejecutar las pruebas: `npm run coverage`
+
+**3.** Se deben desplegar los contratos, ya que al hacerlo se deben acuñar los fondos de préstamos para el protocolo y los fondos de colaterales para la billetera: `npx hardhat run scripts/deploy.js --network ephemery`
+
+**4.** Copiar las direcciones de los contratos, crear un archivo .env en el directorio *web_app* y agregar las direcciones en el mismo:
 ```
-CollateralToken deployed to: 0xB6c0ea2815B54D165a851fAd960572Ced2E1E9B4
-LoanToken deployed to: 0x35aceb20e931baBC78eBCD623D3d9E8c6f2C5594
-LendingProtocol deployed to: 0x766DE4EbBEf8e32302208Dc706B91C574e1224f1
+VITE_LENDING_PROTOCOL_ADDRESS=""//La dirección del protocolo
+VITE_LOAN_TOKEN_ADDRESS=""//La dirección del préstamo
+VITE_COLLATERAL_TOKEN_ADDRESS=""//La dirección del colateral
 ```
 
-**3.** Copiar la dirección del contrato y pegarlo en la variable del archivo .env del directorio *web_app*
+**5.** Ejecutar el front-end desde el directorio *web_app*: `npm run dev`
 
-**4.** Ejecutar el front-end desde el directorio *web_app*: `npm run dev`
-
-**5.** Visualizar el mercado en la dirección web que te muestre en consola
+**6.** Visualizar y probar la página en la dirección web que te muestre en consola

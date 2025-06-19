@@ -37,8 +37,8 @@ contract LendingProtocol is Ownable
         IERC20(loanTokenAddress).transfer(msg.sender, amount);
     }
 
-    // Acumula el 5% de interés simple semanal sobre la deuda pendiente del usuario
-    function accrueInterest(address user) public {
+    function accrueInterest(address user) public 
+    {
         uint256 debt = loanBalances[user];
         require(debt > 0, "No hay deuda activa.");
         uint256 interest = (debt * INTEREST_RATE) / 100;
@@ -47,16 +47,13 @@ contract LendingProtocol is Ownable
 
     function repay() external 
     {
-        // Solo acumula el interés si no se ha hecho explícitamente
-        // y hay una deuda pendiente
         uint256 totalDebt = loanBalances[msg.sender] + accruedInterest[msg.sender];
-        if (loanBalances[msg.sender] > 0 && accruedInterest[msg.sender] == 0) {
+        if (loanBalances[msg.sender] > 0 && accruedInterest[msg.sender] == 0) 
+        {
             accrueInterest(msg.sender);
-            totalDebt = loanBalances[msg.sender] + accruedInterest[msg.sender]; // Recalcula después de acumular
+            totalDebt = loanBalances[msg.sender] + accruedInterest[msg.sender];
         }
-        
-        if (totalDebt == 0) return; // No hay nada que pagar
-        
+        if (totalDebt == 0) return;
         require(IERC20(loanTokenAddress).balanceOf(msg.sender) >= totalDebt, "Saldo insuficiente.");
         IERC20(loanTokenAddress).transferFrom(msg.sender, address(this), totalDebt);
         loanBalances[msg.sender] = 0;
@@ -72,7 +69,14 @@ contract LendingProtocol is Ownable
         IERC20(collateralTokenAddress).transfer(msg.sender, amount);
     }
 
-    function getUserData(address user) external view returns (uint256 collateral, uint256 debt, uint256 interest) {
+    function addLoanTokenLiquidity(uint256 amount) external onlyOwner 
+    {
+        require(amount > 0, "La cantidad debe ser mayor que cero.");
+        IERC20(loanTokenAddress).transferFrom(msg.sender, address(this), amount);
+    }
+
+    function getUserData(address user) external view returns (uint256 collateral, uint256 debt, uint256 interest) 
+    {
         collateral = collateralBalances[user];
         debt = loanBalances[user];
         interest = accruedInterest[user];
