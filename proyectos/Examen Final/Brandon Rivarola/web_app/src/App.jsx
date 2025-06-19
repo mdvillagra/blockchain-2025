@@ -8,7 +8,8 @@ const lendingProtocolAbi = [
   "function borrow(uint256 amount)",
   "function repay()",
   "function withdrawCollateral()",
-  "function getUserData(address user) view returns (uint256 collateral, uint256 debt, uint256 interest)"
+  "function getUserData(address user) view returns (uint256 collateral, uint256 debt, uint256 interest)",
+  "function INTEREST_RATE() view returns (uint256)"
 ];
 
 const erc20Abi = [
@@ -137,22 +138,23 @@ function App() {
   };
 
   const repay = async () => {
-    // Nota: La suma de BigInts es correcta.
-    const totalDebt = ethers.parseEther(userData.debt) + ethers.parseEther(userData.interest);
-    // Se debe comparar con un BigInt (0n)
-    if (totalDebt <= 0n) return displayNotification("No debt to repay.", true);
+    const debt = ethers.parseEther(userData.debt);
+    const interest = ethers.parseEther(userData.interest);
+    let totalDebt = debt + interest;
 
-    // Advertencia: Puede haber una condición de carrera aquí. El interés puede acumularse
-    // entre el momento en que se leen los datos y se envía la transacción,
-    // lo que podría hacer que la cantidad aprobada sea insuficiente.
-    // Una solución común es aprobar ethers.MaxUint256, pero tiene implicaciones de seguridad.
+    if (totalDebt <= 0n) {
+      displayNotification("No debt to repay.", true);
+      return;
+    }
     await handleTransaction(async () => {
+      displayNotification("Requesting approval to repay your debt...");
       const approveTx = await contracts.loanToken.approve(lendingProtocolAddress, totalDebt);
       await approveTx.wait();
+      
+      displayNotification("Approval successful! Now repaying debt...");
       return contracts.lendingProtocol.repay();
     }, "Debt repaid successfully!");
   };
-
   const withdraw = async () => {
     await handleTransaction(
       () => contracts.lendingProtocol.withdrawCollateral(),

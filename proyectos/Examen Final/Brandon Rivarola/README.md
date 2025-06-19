@@ -9,12 +9,12 @@ Se deben instalar las dependencias tanto en el directorio raiz como en el direct
 
 ```
 PRIVATE_KEY=""//Acá se debe poner la clave privada de la billetera
-VITE_RPC_URL="https://otter.bordel.wtf/erigon"
+VITE_RPC_URL="https://ethereum-sepolia-rpc.publicnode.com/"
 ```
 
 **2.** Ejecutar las pruebas: `npm run coverage`
 
-**3.** Se deben desplegar los contratos, ya que al hacerlo se deben acuñar los fondos de préstamos para el protocolo y los fondos de colaterales para la billetera: `npx hardhat run scripts/deploy.js --network ephemery`
+**3.** Se deben desplegar los contratos, ya que al hacerlo se deben acuñar los fondos de préstamos para el protocolo y los fondos de colaterales para la billetera: `npx hardhat run scripts/deploy.js --network sepolia`
 
 **4.** Copiar las direcciones de los contratos, crear un archivo .env en el directorio *web_app* y agregar las direcciones en el mismo:
 ```

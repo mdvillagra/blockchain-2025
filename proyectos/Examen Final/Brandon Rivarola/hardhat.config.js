@@ -7,7 +7,7 @@ module.exports =
 {
     networks: 
     {
-        ephemery: 
+        sepolia: 
         {
             url: process.env.VITE_RPC_URL,
             accounts: [process.env.PRIVATE_KEY],
