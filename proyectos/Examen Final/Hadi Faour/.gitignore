@@ -1,0 +1,54 @@
+# Node modules
+node_modules/
+web_app/node_modules/
+
+# Build output
+web_app/dist/
+web_app/.vite/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+web_app/.env
+
+# Hardhat files
+cache/
+artifacts/
+coverage.json
+
+# Coverage outputs
+coverage/
+*.lcov
+
+# IDE / Editor folders
+.vscode/
+.idea/
+
+# Docker
+*.local
+docker-compose.override.yml
+
+# Optional lock files (choose one if using multiple managers carefully)
+package-lock.json
+web_app/package-lock.json
+
+# Optional: if you use Hardhat's typechain
+typechain/
+typechain-types/
+
+# Mac system metadata
+*.DS_Store
+
+# Optional: test/temp files
+test/tmp/
+test/**/*.tsbuildinfo
