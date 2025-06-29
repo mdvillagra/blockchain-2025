@@ -3,6 +3,10 @@ node_modules/
 artifacts/
 cache/
 
+# Directorios de compilación y caché
+artifacts/
+cache/
+
 .env
 .env.local
 .env.*.local
