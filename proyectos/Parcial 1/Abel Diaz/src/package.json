@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "snarkjs": "^0.7.5",
+    "circomlib": "git+https://github.com/iden3/circomlib.git"
+  }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>zk-SNARK Verifier</title>
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@0.6.11/build/snarkjs.min.js"></script>
+</head>
+<body>
+  <h2>Verificador zk-SNARK</h2>
+  <button onclick="verify()">Verificar</button>
+  <div id="resultado"></div>
+
+  <script>
+    async function verify() {
+      const resultadoRef = document.getElementById("resultado");
+      const vk = await fetch("verification_key.json").then(res => res.json());
+      const proof = await fetch("proof.json").then(res => res.json());
+      const pub = await fetch("public.json").then(res => res.json());
+
+      const valido = await snarkjs.groth16.verify(vk, pub, proof);
+      
+      if (valido) {
+          resultadoRef.textContent = "La prueba es válida";
+          resultadoRef.style.color = "green";
+        } else {
+          resultadoRef.textContent = "La prueba es inválida";
+          resultadoRef.style.color = "red";
+        }
+    }
+  </script>
+</body>
+</html>

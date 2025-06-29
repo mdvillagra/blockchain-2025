@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verificador ZK</title>
+    <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/dist/snarkjs.min.js"></script>
+</head>
+<body>
+    <h1>Verificador de Prueba ZK</h1>
+    <button onclick="verifyProof()">Verificar Prueba</button>
+    <div id="verificationResult"></div>
+
+    <script src="verifier.js"></script>
+    <script>
+        async function verifyProof() {
+            const verificationKey = await fetch("verification_key.json").then(res => res.json());
+            const publicSignals = await fetch("public.json").then(res => res.json());
+            const proof = await fetch("proof.json").then(res => res.json());
+            
+            const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
+            
+            document.getElementById("verificationResult").innerHTML = isValid ? 
+                "<p style='color:green;'>✓ Prueba válida</p>" : 
+                "<p style='color:red;'>✗ Prueba inválida</p>";
+        }
+    </script>
+</body>
+</html>

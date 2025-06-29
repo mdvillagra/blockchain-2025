@@ -1,0 +1,33 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "compile": "hardhat compile",
+    "clean": "npx hardhat clean",
+    "deploy": "hardhat run scripts/deploy.cjs --network ephemery",
+    "copy-abi": "node scripts/copyAbi.js",
+    "build-contracts": "npm run clean && npx hardhat compile && npm run copy-abi",
+    "start-app": "npm --prefix web_app run dev",
+    "dev:frontend": "cd web_app && npm run dev",
+    "build:frontend": "cd web_app && npm run build",
+    "setup": "npm install && cd web_app && npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.24.1",
+    "solidity-coverage": "^0.8.16"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.3.0",
+    "dotenv": "^16.5.0",
+    "ethers": "^6.14.3"
+  }
+}

@@ -1,0 +1,17 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+
+# Generated files
+*.r1cs
+*.sym
+*.zkey
+*.ptau
+*.wtns
+proof.json
+public.json
+circuito_js/
+verification_key.json
+
+

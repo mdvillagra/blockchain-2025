@@ -1,0 +1,1 @@
+const { ethers } = require("hardhat"); console.log("borrow selector:", ethers.keccak256(ethers.toUtf8Bytes("borrow(uint256)")).slice(0, 10)); console.log("repay selector:", ethers.keccak256(ethers.toUtf8Bytes("repay()")).slice(0, 10));

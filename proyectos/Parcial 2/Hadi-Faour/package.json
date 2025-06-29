@@ -1,0 +1,19 @@
+{
+  "name": "nft-marketplace",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.js --network ephemery",
+    "mint-initial": "hardhat run scripts/mint-initial.js --network ephemery",
+    "start-web": "cd web-app && npm run dev",
+    "build-web": "cd web-app && npm run build"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "@openzeppelin/contracts": "^4.9.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.2"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "collateralTokenAddress": "0x06c23545742A870F29838EB8D08Ef16Af119A605",
+  "loanTokenAddress": "0x364070a59976E27d83481493e43215CF02EbB0d3",
+  "lendingProtocolAddress": "0xb97E90d62c2dbAC861F596600863911c1dFD3435"
+}

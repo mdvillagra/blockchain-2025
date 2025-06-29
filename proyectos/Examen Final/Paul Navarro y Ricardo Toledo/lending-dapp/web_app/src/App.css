@@ -1,0 +1,160 @@
+/* Reset + Base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+#root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #90caf9;
+  margin-bottom: 2rem;
+}
+
+/* Section Layout */
+section {
+  background: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  padding: 1.75rem 2rem;
+  margin: 1.25rem 0;
+  width: 100%;
+  max-width: 800px;
+  transition: transform 0.2s ease;
+}
+
+section:hover {
+  transform: scale(1.01);
+}
+
+section h2 {
+  font-size: 1.3rem;
+  color: #bbdefb;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Text */
+p {
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  text-align: center;
+}
+
+strong {
+  color: #ffffff;
+}
+
+/* Buttons */
+button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  margin: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.2);
+}
+
+button:hover {
+  background-color: #5c6bc0;
+  transform: translateY(-1px);
+}
+
+/* Layout Containers */
+.account-info,
+.balances,
+.actions,
+.mint-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+@media (min-width: 600px) {
+  .actions,
+  .mint-section {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    margin: 0.5rem;
+  }
+}
+
+
+
+#wallet-landing {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in;
+}
+
+.logo-icon {
+  font-size: 4rem;
+  color: #90caf9;
+  animation: pulse 2s infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+section h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2a2a2e;
+  padding: 0.6rem 1rem;
+  margin: 0.4rem 0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  gap: 1rem;
+}
+
+.info-row strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+}

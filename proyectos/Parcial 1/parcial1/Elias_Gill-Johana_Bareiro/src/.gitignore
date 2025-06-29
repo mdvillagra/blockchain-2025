@@ -1,0 +1,28 @@
+# Ignorar la carpeta de artefactos generados
+/artifacts/
+
+# Ignorar archivos de dependencias de Node.js
+node_modules/
+
+# Ignorar archivos de configuración local
+.env
+.env.local
+
+# Ignorar archivos de bloqueo de dependencias (ya que tienes package-lock.json)
+yarn.lock
+
+# Ignorar archivos de configuración de IDE
+.vscode/
+.idea/
+
+# Ignorar archivos de log y temporales
+*.log
+*.tmp
+
+# Ignorar archivos de compilación específicos (si los hay)
+*.wasm
+*.zkey
+proof.json
+public.json
+verification_key.json
+witness.wtns

@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.webpack
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Build files
+dist/
+build/
+.hardhat/
+artifacts/
+cache/
+coverage/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+docker-compose.override.yml
+.DS_Store
+
+# Hardhat
+typechain/
+# Local Hardhat network
+hardhat_node/
+
+# Frontend
+web-app/.env
+web-app/dist/
+web-app/node_modules/
+
+# System Files
+Thumbs.db

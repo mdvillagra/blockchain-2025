@@ -1,0 +1,7 @@
+{
+  "network": "sepolia",
+  "collateralToken": "0xBb0d0E7534Cb381e1aE0a02bA5c0105f0c79B4E9",
+  "loanToken": "0x8343444CED87979dde24d9F6d0f68B3854664Db9",
+  "lendingProtocol": "0x2E4eb9887127Ae7138Ee7A3E39C1D4Dc2E101fB7",
+  "deployer": "0x910b03584659f87344c8B0dfFE23dA6A1a3fF41C"
+}

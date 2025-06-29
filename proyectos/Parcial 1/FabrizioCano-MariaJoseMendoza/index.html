@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Pruebas ZK-SNARK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #333333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .proof-selector {
+            margin-bottom: 1.5rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #333333;
+            padding: 1rem;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        .success {
+            color: #28a745;
+            border-left: 4px solid #28a745;
+        }
+
+        .error {
+            color: #dc3545;
+            border-left: 4px solid #dc3545;
+        }
+
+        .proof-list {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .proof-item {
+            background-color: white;
+            padding: 1rem;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .proof-name {
+            font-weight: bold;
+        }
+
+        .proof-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .status-valid {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verificación de Pruebas ZK-SNARK</h1>
+        
+        <div class="proof-selector">
+            <select id="proofSelector">
+                <option value="">Selecciona una prueba</option>
+                <option value="input1">input1.json</option>
+                <option value="input2">input2.json</option>
+                <!-- Agrega más opciones según sea necesario -->
+            </select>
+        </div>
+        
+        <button onclick="verifySelectedProof()">Verificar Prueba Seleccionada</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="proof-list" id="proofList">
+        <h2>Resumen de Pruebas</h2>
+        <!-- Aquí se agregarán dinámicamente las pruebas -->
+    </div>
+
+    <script src="./node_modules/snarkjs/build/snarkjs.min.js"></script>
+    <script>
+        // Lista de pruebas disponibles
+        const proofs = [
+            { name: 'input1', file: 'input1.json' },
+            { name: 'input2', file: 'input2.json' }
+            // Agrega más pruebas según sea necesario
+        ];
+
+        // Cargar y mostrar la lista de pruebas
+        function loadProofList() {
+            const proofList = document.getElementById('proofList');
+            
+            // Limpiar lista existente (excepto el título)
+            while (proofList.children.length > 1) {
+                proofList.removeChild(proofList.lastChild);
+            }
+            
+            // Agregar cada prueba a la lista
+            proofs.forEach(proof => {
+                const proofItem = document.createElement('div');
+                proofItem.className = 'proof-item';
+                proofItem.innerHTML = `
+                    <div class="proof-name">${proof.file}</div>
+                    <div class="proof-status" id="status-${proof.name}">No verificado</div>
+                    <button onclick="verifyProof('${proof.name}')" style="width: auto; padding: 0.25rem 0.5rem;">Verificar</button>
+                `;
+                proofList.appendChild(proofItem);
+            });
+        }
+
+        // Verificar una prueba específica
+        async function verifyProof(proofName) {
+            const resultElement = document.getElementById("result");
+            const statusElement = document.getElementById(`status-${proofName}`);
+            
+            resultElement.textContent = `Verificando ${proofName}...`;
+            resultElement.classList.remove("success", "error");
+            statusElement.textContent = "Verificando...";
+            statusElement.className = "proof-status";
+            
+            try {
+                // Cargar los archivos necesarios
+                const verificationKey = await fetch('./circuito_js/verification_key.json').then(res => res.json());
+                const proof = await fetch(`proof_${proofName}.json`).then(res => res.json());
+                const publicSignals = await fetch(`public_${proofName}.json`).then(res => res.json());
+
+                // Verificar la prueba
+                const isValid = await snarkjs.groth16.verify(verificationKey, publicSignals, proof);
+
+                // Actualizar la UI
+                if (isValid) {
+                    resultElement.textContent = `Prueba ${proofName} es válida.`;
+                    resultElement.classList.add("success");
+                    statusElement.textContent = "Válida";
+                    statusElement.className = "proof-status status-valid";
+                } else {
+                    resultElement.textContent = `Prueba ${proofName} no es válida.`;
+                    resultElement.classList.add("error");
+                    statusElement.textContent = "Inválida";
+                    statusElement.className = "proof-status status-invalid";
+                }
+            } catch (error) {
+                console.error("Error durante la verificación:", error);
+                resultElement.textContent = `Error verificando ${proofName}: ${error.message}`;
+                resultElement.classList.add("error");
+                statusElement.textContent = "Error";
+                statusElement.className = "proof-status status-invalid";
+            }
+        }
+
+        // Verificar la prueba seleccionada en el dropdown
+        function verifySelectedProof() {
+            const selector = document.getElementById('proofSelector');
+            const selectedProof = selector.value;
+            
+            if (selectedProof) {
+                verifyProof(selectedProof);
+            } else {
+                alert("Por favor selecciona una prueba primero");
+            }
+        }
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProofList();
+        
+        });
+    </script>
+</body>
+</html>

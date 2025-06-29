@@ -1,0 +1,9 @@
+{
+  "network": "ephemery",
+  "contracts": {
+    "CollateralToken": "0x1a58a13a4D5d0E5495b8dbF72a6B81B36FE13A7f",
+    "LoanToken": "0xD9947a5ee850c617523e84B3Ef9202dFC8D5f4a1",
+    "LendingProtocol": "0x965d7fa02e36783f720Df3C301c90337b8f8D813"
+  },
+  "timestamp": "2025-06-18T12:23:51.063Z"
+}
