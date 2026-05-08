@@ -1,0 +1,5 @@
+{
+  "LendingModule#CollateralToken": "0x0A0A4ce9E960ecdcF89AcC007E8ddB56E510887e",
+  "LendingModule#LoanToken": "0x950d5dED8Fcd932D14489ef84fa47dE57cEA42f9",
+  "LendingModule#LendingProtocol": "0x65D013E85921f142713b10c71BC1CD11503c1D77"
+}
